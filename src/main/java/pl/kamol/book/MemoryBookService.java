@@ -3,9 +3,7 @@ package pl.kamol.book;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 public class MemoryBookService {
@@ -14,11 +12,11 @@ public class MemoryBookService {
     public MemoryBookService() {
         bookList = new ArrayList<>();
         bookList.add(new Book(1L, "9788324631766", "Thinking in Java", "Bruce Eckel",
-                              "Helion", "programming"));
+                "Helion", "programming"));
         bookList.add(new Book(2L, "9788324627738", "Rusz glowa, Java.",
-                              "Sierra Kathy, Bates Bert", "Helion", "programming"));
+                "Sierra Kathy, Bates Bert", "Helion", "programming"));
         bookList.add(new Book(3L, "9780130819338", "Java 2. Podstawy",
-                              "Cay Horstmann, Gary Cornell", "Helion", "programming"));
+                "Cay Horstmann, Gary Cornell", "Helion", "programming"));
     }
 
 //    public Book getBook(Long id) {
@@ -49,8 +47,6 @@ public class MemoryBookService {
         bookToBeUpdated.setAuthor(book.getAuthor());
         bookToBeUpdated.setPublisher(book.getPublisher());
         bookToBeUpdated.setType(book.getType());
-
-
         return bookToBeUpdated;
     }
 
@@ -66,6 +62,12 @@ public class MemoryBookService {
         return bookToBeDeleted;
     }
 
-    //TODO:: addBook
+    public Book addBook(Book book) {
+        Book max = Collections.max(bookList, Comparator.comparingLong(Book::getId));
+        book.setId(max.getId()+1L);
+        bookList.add(book);
+        return book;
+    }
+
 
 }

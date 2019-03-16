@@ -18,6 +18,12 @@ public class BookController {
         return memoryBookService.getBookList();
     }
 
+    @PostMapping
+    public Book addBook (@RequestBody Book book){
+        Book addedBook = memoryBookService.addBook(book);
+        return addedBook;
+    }
+
 
     @RequestMapping("/{bookId}")
     public ResponseEntity<Book> getBook(@PathVariable Long bookId) {
