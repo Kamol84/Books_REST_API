@@ -54,19 +54,24 @@ public class MemoryBookService {
         return bookList;
     }
 
-    public Book delateBook(long bookId) {
-        Book bookToBeDeleted = bookList.stream()
-                .filter(b -> b.getId() == bookId)
-                .findFirst().get();
-        bookList.remove(bookToBeDeleted);
-        return bookToBeDeleted;
-    }
-
     public Book addBook(Book book) {
         Book max = Collections.max(bookList, Comparator.comparingLong(Book::getId));
         book.setId(max.getId()+1L);
         bookList.add(book);
         return book;
+    }
+
+    public ResponseEntity<Book> delateBook(Long bookId) {
+        Optional<Book> bookToBeDeleted = bookList.stream()
+                .filter(b -> b.getId() == bookId)
+                .findFirst();
+        if(bookToBeDeleted.isPresent()){
+            bookList.remove(bookToBeDeleted.get());
+            return ResponseEntity.noContent().build();
+        } else
+        {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 

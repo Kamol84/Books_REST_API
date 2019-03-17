@@ -25,7 +25,7 @@ public class BookController {
     }
 
 
-    @RequestMapping("/{bookId}")
+    @GetMapping("/{bookId}")
     public ResponseEntity<Book> getBook(@PathVariable Long bookId) {
         ResponseEntity<Book> book = memoryBookService.getBook(bookId);
         return book;
@@ -40,8 +40,8 @@ public class BookController {
     }
 
     @DeleteMapping("/{bookId}")
-    public Book deleteBook(@PathVariable long bookId){
-        Book deletedBook = memoryBookService.delateBook(bookId);
+    public ResponseEntity<Book> deleteBook(@PathVariable Long bookId){
+        ResponseEntity<Book> deletedBook = memoryBookService.delateBook(bookId);
         return  deletedBook;
     }
 
